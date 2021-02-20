@@ -1,0 +1,10 @@
+dependencies {
+    // AdfurikunSDK
+    implementation files('libs/adfurikunMovieRewardSDK-3.7.1.aar')
+    // PangleSDK
+    implementation files('libs/pangle-sdk-3.4.1.1.aar')
+}
+// 各アドネットワークライブラリ導入用
+apply from: 'libs/adfurikunsdk-adnw-maven.gradle'
+// 必要なサポートライブラリ導入用
+apply from: 'libs/adfurikunsdk-support-androidx.gradle'

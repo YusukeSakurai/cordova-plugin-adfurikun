@@ -1,0 +1,16 @@
+{
+  "version": "0.0.1",
+  "name": "cordova-plugin-adfurikun",
+  "description": "adfurikun",
+  "cordova": {
+    "id": "cordova-plugin-adfurikun",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "cordova",
+    "cordova-android"
+  ],
+  "engines": []
+}

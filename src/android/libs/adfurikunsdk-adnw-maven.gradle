@@ -1,0 +1,27 @@
+repositories {
+    jcenter() //AppLovin, Facebook
+    maven {url "https://jitpack.io" } //Vungle
+    maven {url "https://adcolony.bintray.com/AdColony" }
+    maven {url "https://tapjoy.bintray.com/maven" }
+    maven {url "https://imobile-maio.github.io/maven" }
+    maven {url "http://fan-adn.github.io/nendSDK-Android-lib/library" }
+    maven {url 'https://github.com/amoad/amoad-android-sdk-maven/raw/master/' }
+}
+
+//AdNetwork
+dependencies {
+    implementation 'com.adcolony:sdk:4.3.0'
+    implementation 'com.applovin:applovin-sdk:9.14.8'
+    implementation 'com.unity3d.ads:unity-ads:3.5.1'
+    implementation 'com.amoad:amoad-sdk:5.2.18'
+    implementation 'com.maio:android-sdk:1.1.14@aar'
+    implementation 'net.nend.android:nend-sdk:7.0.1'
+    implementation 'com.tapjoy:tapjoy-android-sdk:12.7.1'
+    implementation 'com.github.vungle:vungle-android-sdk:6.8.1'
+    implementation 'com.facebook.android:audience-network-sdk:6.2.0'
+    implementation('com.mopub:mopub-sdk:5.15.0@aar') {
+        transitive = true
+        exclude module: 'libAvid-mopub'
+        exclude module: 'moat-mobile-app-kit'
+    }
+}

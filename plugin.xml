@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordoba-plugin-adfurikun" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>adfurikun</name>
+    <description>Adfurikun Plugin</description>
+    <js-module name="adfurikun" src="www/adfurikun.js">
+        <clobbers target="window.Adfurikun" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="Adfurikun">
+                <param name="android-package" value="com.yusukesakurai.cordova.adfurikun.Adfurikun" />
+            </feature>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="application">
+            <!-- アドフリくんデバッグログ -->
+            <meta-data android:name="adfurikun_test" android:value="true" />
+            <!-- Google Mobile Ads SDK version 17.0.0からこのフラグは必須です -->
+            <meta-data android:name="com.google.android.gms.ads.AD_MANAGER_APP" android:value="true" />
+            <!-- Pangle -->
+            <provider android:name="com.bytedance.sdk.openadsdk.multipro.TTMultiProvider"
+                android:authorities="${applicationId}.TTMultiProvider" android:exported="false" />
+        </config-file>
+
+        <lib-file src="src/android/libs/adfurikunMovieRewardSDK-3.7.1.aar" />
+        <lib-file src="src/android/libs/adfurikunsdk-adnw-maven.gradle" />
+        <lib-file src="src/android/libs/adfurikunsdk-support-androidx.gradle" />
+        <lib-file src="src/android/libs/adfurikunsdk-support-legacy.gradle" />
+        <lib-file src="src/android/libs/fiveAd-20210119.jar" />
+        <lib-file src="src/android/libs/pangle-sdk-3.4.1.1.aar" />
+        <lib-file src="src/android/libs/pangle-sdk-china-3.2.5.1.aar" />
+
+        <source-file src="src/android/Adfurikun.java" target-dir="src/com/yusukesakurai/cordova/adfurikun" />
+
+        <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
+
+    </platform>
+</plugin>

@@ -1,0 +1,10 @@
+dependencies {
+    implementation 'com.android.support:support-annotations:28.0.0' //AdColony
+    implementation 'com.android.support:recyclerview-v7:28.0.0' //FAN
+    implementation 'com.android.support:appcompat-v7:28.0.0' //Afio AppCompactActivity
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+    //Common
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.3.50' //Adfurikun
+    implementation 'com.google.android.gms:play-services-ads:19.5.0' //Adfurikun
+}
