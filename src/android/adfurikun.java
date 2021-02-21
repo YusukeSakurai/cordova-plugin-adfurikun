@@ -13,12 +13,24 @@ import org.json.JSONObject;
 
 import android.provider.Settings;
 
+
+import android.content.Context;
+import android.content.Intent;
+
+
+
+
+
 import jp.tjkapp.adfurikunsdk.moviereward.AdfurikunMovieError;
 import jp.tjkapp.adfurikunsdk.moviereward.AdfurikunMovieReward;
 import jp.tjkapp.adfurikunsdk.moviereward.AdfurikunMovieRewardListener;
 import jp.tjkapp.adfurikunsdk.moviereward.AdfurikunMovieType;
 import jp.tjkapp.adfurikunsdk.moviereward.AdfurikunSdk;
 import jp.tjkapp.adfurikunsdk.moviereward.MovieRewardData;
+
+
+
+
 
 public class Adfurikun extends CordovaPlugin {
 
@@ -65,20 +77,27 @@ public class Adfurikun extends CordovaPlugin {
     };
 
 
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize(cordova, webView);
+        // 広告枠ID・Activityを指定し、動画リワードのインスタンスを生成
+        mReward = new AdfurikunMovieReward("6027f6f143f084766d000031", cordova.getActivity());
+        mReward.setAdfurikunMovieRewardListener(mListener);
+        mReward.load();
+    }
 
+    
+    @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-
-
-
         if ("init".equals(action)) {
-            // 広告枠ID・Activityを指定し、動画リワードのインスタンスを生成
-            mReward = new AdfurikunMovieReward("6027f6f143f084766d000031", cordova.getActivity());
-            mReward.setAdfurikunMovieRewardListener(mListener);
-            mReward.load();
 
-//            JSONObject r = new JSONObject();
-
-//            callbackContext.success("aiueo");
+        }
+        else if ("load".equals(action)){
+            Context context = cordova.getActivity().getApplicationContext();
+            if(action.equals("new_activity")) {
+                this.openNewActivity(context);
+                return true;
+            }
+            return false;
         }
         else if ("play".equals(action)){
             mReward.play();
@@ -86,5 +105,14 @@ public class Adfurikun extends CordovaPlugin {
         }
         return true;
     }
+    
+    private void openNewActivity(Context context) {
+        Intent intent = new Intent(context, NewActivity.class);
+        this.cordova.getActivity().startActivity(intent);
+    }
 
 }
+
+
+
+
