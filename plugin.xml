@@ -28,7 +28,7 @@
 
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <activity android:label="New Activity" android:name="com.example.sample.plugin.NewActivity"></activity>
+            <activity android:label="New Activity" android:name="com.yusukesakurai.cordova.adfurikun.NewActivity"></activity>
         </config-file>
 
         <lib-file src="src/android/libs/adfurikunMovieRewardSDK-3.7.1.aar" />
