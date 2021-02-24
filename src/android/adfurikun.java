@@ -1,25 +1,16 @@
 
 package com.yusukesakurai.cordova.adfurikun;
 
-import java.util.TimeZone;
-
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaInterface;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.provider.Settings;
-
-
-import android.content.Context;
-import android.content.Intent;
-
-
-
-
+import android.app.Activity;
+import android.util.Log;
 
 import jp.tjkapp.adfurikunsdk.moviereward.AdfurikunMovieError;
 import jp.tjkapp.adfurikunsdk.moviereward.AdfurikunMovieReward;
@@ -28,91 +19,109 @@ import jp.tjkapp.adfurikunsdk.moviereward.AdfurikunMovieType;
 import jp.tjkapp.adfurikunsdk.moviereward.AdfurikunSdk;
 import jp.tjkapp.adfurikunsdk.moviereward.MovieRewardData;
 
+public class Adfurikun extends CordovaPlugin  {
+    // main activity
+    Activity cordovaActivity;
+    // webview
+    CordovaWebView cordovaWebView;
 
-
-
-
-public class Adfurikun extends CordovaPlugin {
-
+    // adfurikun instance
     AdfurikunMovieReward mReward;
 
-    //リスナーを定義
+    // adfurikun リスナーを定義
     AdfurikunMovieRewardListener mListener = new AdfurikunMovieRewardListener(){
+
+        // 動画再生準備完了
         @Override
         public void onPrepareSuccess() {
-            // 動画の再生が可能になりました。
-            // 状態をフラグなどで管理してください
-            // webView.loadUrl("javascript:_adfurikun.ready();");
+            String cmd = js("adfurikun.movie.ready");
+            cordovaWebView.loadUrl(cmd);
         }
-
+        // 動画再生準備失敗
         @Override
         public void onPrepareFailure(AdfurikunMovieError error) {
-            // 広告の読み込みが失敗になりました。
-            // もう一度広告の読み込みしてください。
+            String cmd = js("adfurikun.movie.fail");
+            cordovaWebView.loadUrl(cmd);
         }
-
+        // 動画の再生開始
         @Override
         public void onStartPlaying(MovieRewardData data) {
-            // 動画の再生を開始します。
-            // 各アドネットワークが用意したActivityが起動して、動画再生が始まります。
+            String cmd = js("adfurikun.movie.start");
+            cordovaWebView.loadUrl(cmd);
         }
-
+        // 動画の再生完了
         @Override
         public void onFinishedPlaying(MovieRewardData data) {
-            // 動画の再生が完了しました。
-            // リワード 付与など、ユーザへの対応を行ってください。
+            String cmd = js("adfurikun.movie.finish");
+            cordovaWebView.loadUrl(cmd);
         }
-
+        // 動画の再生が失敗 再生開始時にネットワークへ接続していない場合も
         @Override
         public void onFailedPlaying(MovieRewardData data) {
-            // 動画の再生が失敗しました。
-            // 再生開始時にネットワークへ接続していない場合も、失敗として通知します。
+            String cmd = js("adfurikun.movie.fail");
+            cordovaWebView.loadUrl(cmd);
         }
-
+        // 動画広告のActivityが終了 アプリのActivityが復帰
         @Override
         public void onAdClose(MovieRewardData data) {
-            // 動画広告のActivityが終了しました。
-            // アプリのActivityが復帰します。
+            String cmd = js("adfurikun.movie.close");
+            cordovaWebView.loadUrl(cmd);
         }
     };
 
-
+    // init
+    @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        // 広告枠ID・Activityを指定し、動画リワードのインスタンスを生成
-        mReward = new AdfurikunMovieReward("6027f6f143f084766d000031", cordova.getActivity());
+        cordovaActivity = cordova.getActivity();
+        cordovaWebView = webView;
+
+        mReward = new AdfurikunMovieReward("6027f6f143f084766d000031", cordovaActivity);
         mReward.setAdfurikunMovieRewardListener(mListener);
+        mReward.onResume();
         mReward.load();
     }
 
-    
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if ("init".equals(action)) {
-
+        if ("init".equals(action)){
+            callbackContext.success();
+            return true;
         }
-        else if ("load".equals(action)){
-            Context context = cordova.getActivity().getApplicationContext();
-            if(action.equals("new_activity")) {
-                this.openNewActivity(context);
-                return true;
-            }
-            return false;
-        }
-        else if ("play".equals(action)){
+        if ("play".equals(action)){
             mReward.play();
-            return false;
+            callbackContext.success();
+            return true;
         }
-        return true;
+        return false;
     }
-    
-    private void openNewActivity(Context context) {
-        Intent intent = new Intent(context, NewActivity.class);
-        this.cordova.getActivity().startActivity(intent);
+    @Override
+    public void onResume(boolean b) {
+        super.onResume(b);
+        if (mReward != null) {
+            mReward.onResume();
+        }
+    }
+    @Override
+    public void onPause(boolean b) {
+        if (mReward != null) {
+            mReward.onPause();
+        }
+        super.onPause(b);
+    }
+    @Override
+    public void onDestroy() {
+        if (mReward != null) {
+            mReward.onDestroy();
+        }
+        super.onDestroy();
     }
 
+    public String js(String cmd){
+        String res =
+            "javascript:cordova.fireDocumentEvent('" +
+            cmd+
+            "');";
+        return res;
+    }
 }
-
-
-
-

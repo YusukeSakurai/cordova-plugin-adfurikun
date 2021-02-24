@@ -1,6 +1,5 @@
 var exec = require('cordova/exec');
 
-
 var Adfurikun = {
     init: function () {
         exec(
@@ -10,6 +9,15 @@ var Adfurikun = {
             function () {
                 console.log("init fail ");
             }, "Adfurikun", "init", []);
+    },
+    load: function () {
+        exec(
+            function () {
+                console.log("load success ");
+            },
+            function () {
+                console.log("load fail ");
+            }, "Adfurikun", "load", []);
     },
     play: function () {
         exec(

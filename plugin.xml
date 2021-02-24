@@ -24,13 +24,6 @@
                 android:authorities="${applicationId}.TTMultiProvider" android:exported="false" />
         </config-file>
 
-        <!-- <config-file parent="/*" target="AndroidManifest.xml"></config-file> -->
-
-
-        <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <activity android:label="New Activity" android:name="com.yusukesakurai.cordova.adfurikun.NewActivity"></activity>
-        </config-file>
-
         <lib-file src="src/android/libs/adfurikunMovieRewardSDK-3.7.1.aar" />
         <lib-file src="src/android/libs/adfurikunsdk-adnw-maven.gradle" />
         <lib-file src="src/android/libs/adfurikunsdk-support-androidx.gradle" />
@@ -40,9 +33,6 @@
         <lib-file src="src/android/libs/pangle-sdk-china-3.2.5.1.aar" />
 
         <source-file src="src/android/Adfurikun.java" target-dir="src/com/yusukesakurai/cordova/adfurikun" />
-        <source-file src="src/android/NewActivity.java" target-dir="src/com/yusukesakurai/cordova/adfurikun" />
-        <source-file src="src/android/activity_new.xml" target-dir="res/layout"/>
-
 
         <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
 
