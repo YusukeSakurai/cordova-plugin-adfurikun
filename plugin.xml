@@ -37,6 +37,34 @@
         <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
 
     </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="adfurikun">
+                <param name="ios-package" value="CDVadfurikun" />
+            </feature>
+        </config-file>
+        <header-file src="src/ios/CDVadfurikun.h" />
+        <source-file src="src/ios/CDVadfurikun.m" />
+
+        <podspec>
+            <config>
+                <source url="https://cdn.cocoapods.org/" />
+            </config>
+            <pods use-frameworks="false">
+                <pod name="AdfurikunSDK-iOS/Core" />
+                <pod name="AdfurikunSDK-iOS/UnityAds" />
+                <pod name="AdfurikunSDK-iOS/Tapjoy" />
+                <pod name="AdfurikunSDK-iOS/Maio" />
+                <pod name="AdfurikunSDK-iOS/NendAd" />
+                <pod name="AdfurikunSDK-iOS/AppLovin" />
+                <pod name="AdfurikunSDK-iOS/AdColony" />
+                <pod name="AdfurikunSDK-iOS/Pangle" />
+            </pods>
+        </podspec>
+    </platform>
+
 </plugin>
 
 
