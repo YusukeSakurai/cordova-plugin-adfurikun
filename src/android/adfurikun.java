@@ -88,6 +88,11 @@ public class Adfurikun extends CordovaPlugin  {
             callbackContext.success();
             return true;
         }
+        if ("load".equals(action)){
+            mReward.load();
+            callbackContext.success();
+            return true;
+        }
         if ("play".equals(action)){
             mReward.play();
             callbackContext.success();
