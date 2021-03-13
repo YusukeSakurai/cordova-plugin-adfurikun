@@ -76,7 +76,7 @@ public class Adfurikun extends CordovaPlugin  {
         cordovaActivity = cordova.getActivity();
         cordovaWebView = webView;
 
-        mReward = new AdfurikunMovieReward("6027f6f143f084766d000031", cordovaActivity);
+        mReward = new AdfurikunMovieReward("6027f91f43f084746d00006d", cordovaActivity);
         mReward.setAdfurikunMovieRewardListener(mListener);
         mReward.onResume();
         mReward.load();

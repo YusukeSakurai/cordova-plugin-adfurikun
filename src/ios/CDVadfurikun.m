@@ -6,7 +6,7 @@
 
 @implementation CDVadfurikun
 
-NSString* MOVIE_REWARD_APPID = @"6027ea6443f0846e6d000019";
+NSString* MOVIE_REWARD_APPID = @"6037731a43f084ba39000008";
 
 - (void)init:(CDVInvokedUrlCommand *)command {
     CDVPluginResult *pluginResult;
